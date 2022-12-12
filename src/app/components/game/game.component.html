@@ -1,0 +1,21 @@
+<h3>Vez do : {{ turno }}</h3>
+<h2 *ngIf="jogada">
+  Jogador  ganhou o jogo!
+</h2>
+<div class="game-container">
+  <div class="game-board">
+    <div
+      class="square"
+      *ngFor="let square of board; let i = index"
+      (click)="jogada(i)"
+      [ngClass]="{ playerO: square == 'O' }"
+    >
+      {{ square }}
+    </div>
+  </div>
+  <div class="circle"></div>
+  <div class="circle1"></div>
+</div>
+
+<button class="botao-home"> PÁGINA INICIAL </button>
+<button class="botao-reiniciar" (click)="novoJogo()"> REINICIAR</button>
