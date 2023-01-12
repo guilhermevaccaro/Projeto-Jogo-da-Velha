@@ -1,0 +1,17 @@
+<header>
+  <nav>
+    <div *ngIf="user$ | async as user">
+      <div class="cabecalho" *ngIf="user.name; else login">
+        <i class="fotouser"> </i>
+        <div class="nomeuser"><a >{{ user.name }}</a> </div>
+        <a (click)="logout()">Sair</a>
+      </div>
+    </div>
+  </nav>
+
+  <ng-template #login>
+    <span class="textologin">
+      <a [routerLink]="['']">Login</a>
+    </span>
+  </ng-template>
+</header>

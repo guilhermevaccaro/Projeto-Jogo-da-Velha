@@ -6,44 +6,83 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
+  squares: any = [];
+  xIsNext = true;
+  ganhador = '';
+  counter = 0;
+  empate = '';
+  freshpage = true;
+  contraComputador: boolean = false;
+  simboloComputador: string = '';
+
   constructor() {}
-  board!: Array<string>;
-  turno = 'X';
-  ganhador = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [2, 4, 6],
-    [0, 4, 8],
-  ];
-  ngOnInit(): void {
-    this.novoJogo();
-  }
-  novoJogo() {
-    this.board = new Array(9).fill(null);
 
-  }
-  jogada(index: number) {
-    this.board[index] = this.turno;
-    this.turno = this.turno == 'X' ? 'O' : 'X';
+  ngOnInit(): void {}
 
-    for (let i = 0; i < this.ganhador.length; i++) {
-      let winning_check = this.ganhador[i];
-      let p1 = winning_check[0];
-      let p2 = winning_check[1];
-      let p3 = winning_check[2];
+  novoJogo(versusComputador: boolean) {
+    this.contraComputador = versusComputador;
+    this.simboloComputador = this.player == 'X' ? 'O' : 'X';
+    this.squares = Array(9).fill(null);
+    this.ganhador = '';
+    this.empate = '';
+    this.counter = 0;
+    this.freshpage = false;
+  }
+
+  get player() {
+    return this.xIsNext ?  'X' : 'O';
+  }
+
+  fazerJogada(idx: number) {
+    if (!this.squares[idx]) {
+      this.squares.splice(idx, 1, this.player);
+      this.xIsNext = !this.xIsNext;
+      this.counter++;
+      if(this.contraComputador && this.player == this.simboloComputador) {
+        this.fazerJogadaComputador();
+      }
+    }
+    this.ganhador = this.calculateWinner();
+    if (!this.ganhador && this.counter == 9) {
+      this.empate = 'sim';
+    }
+  }
+
+  calculateWinner() {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [2, 4, 6],
+      [0, 4, 8],
+    ];
+
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
       if (
-        this.board[p1] != '' &&
-        this.board[p1] == this.board[p2] &&
-        this.board[p2] == this.board[p3] &&
-        this.board[p1] == this.board[p3]
+        this.squares[a] &&
+        this.squares[a] === this.squares[b] &&
+        this.squares[a] === this.squares[c]
       ) {
-        return this.board[1];
+        return this.squares[a];
       }
     }
     return null;
+  }
+
+  fazerJogadaComputador(): void {
+    var jogadasDisponiveis: any[] = [];
+    var idx = this.squares.indexOf(null);
+    while(idx != -1) {
+      jogadasDisponiveis.push(idx);
+      idx = this.squares.indexOf(null, idx + 1);
+    }
+    var jogada: number = Math.floor(Math.random() * jogadasDisponiveis.length);
+    if(jogadasDisponiveis[jogada] != undefined) {
+      this.fazerJogada(jogadasDisponiveis[jogada]);
+    }
   }
 }

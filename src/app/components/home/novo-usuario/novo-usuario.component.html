@@ -1,0 +1,79 @@
+<section>
+  <header>JOGO DA VELHA</header>
+  <div class="container">
+    <div class="box">
+      <div class="texto1">
+        <h1>CRIAR CONTA</h1>
+      </div>
+      <form [formGroup]="novoUsuarioForm" (submit)="cadastrar()">
+        <div>
+          <input placeholder="E-mail" formControlName="email" />
+          <app-mensagem
+            *ngIf="
+        novoUsuarioForm.get('email')?.errors?.['required'] &&
+        novoUsuarioForm.get('email')?.touched
+      "
+            mensagem="Email Obrigatório"
+          ></app-mensagem>
+          <app-mensagem
+            *ngIf="
+        novoUsuarioForm.get('email')?.errors?.['email'] &&
+        novoUsuarioForm.get('email')?.touched
+      "
+            mensagem="E-mail no formato incorreto"
+          >
+          </app-mensagem>
+        </div>
+        <div>
+          <input placeholder="Nome" formControlName="fullName" />
+          <app-mensagem
+            *ngIf="
+              novoUsuarioForm.get('fullName')?.errors &&
+              novoUsuarioForm.get('fullName')?.touched
+            "
+            mensagem="Nome invalido"
+          ></app-mensagem>
+        </div>
+
+        <div>
+          <input placeholder="Usuário" formControlName="userName" />
+        </div>
+
+        <app-mensagem
+          *ngIf="
+    novoUsuarioForm.get('userName')?.errors?.['minusculo'] &&
+    novoUsuarioForm.get('userName')?.touched
+  "
+          mensagem="Usuario deve conter apenas letras minúsculas"
+        >
+        </app-mensagem>
+        <app-mensagem
+          *ngIf="novoUsuarioForm.get('userName')?.errors?.['usuarioExistente']"
+          mensagem="Usuario já existe"
+        ></app-mensagem>
+
+        <div>
+          <input
+            type="password"
+            placeholder="Senha"
+            formControlName="password"
+          />
+        </div>
+
+        <app-mensagem
+          *ngIf="novoUsuarioForm.errors?.['senhaIgualUsuario']"
+          mensagem="Senha deve ser diferente do usuário"
+        >
+        </app-mensagem>
+
+        <div class="btn2">
+          <button class="btn">CADASTRAR</button>
+        </div>
+      </form>
+
+      <div class="texto2">
+        <p>Já tem conta? <a [routerLink]="['']"> Entrar </a></p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+header{
+  font-size: 30px;
+  display: flex;
+  margin-top: 20px;
+  margin-right: 100px;
+  height: 3vh;
+  justify-content: right;
+}
+
+.nomeuser {
+  margin-bottom: 10px;
+}

@@ -1,5 +1,15 @@
-body{
-    padding: 0;
-    box-sizing: border-box;
-    background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+* {
+  margin: 0 ;
+  padding: 0;
+}
+
+body {
+  background: #02111c;
+  color: #3ee6af;
+  font-family: Helvetica, sans-serif;
+}
+
+a{
+  color: inherit;
+  text-decoration: none;
 }
